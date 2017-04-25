@@ -37,7 +37,8 @@ bind <- function(func, ...) {  # func proto
 #'
 #' @export
 isBound <- function(func) {
-  stopifnot(is.function(func), !is.primitive(func))
+  stopifnot(is.function(func))
+  if (is.primitive(func)) return(FALSE)  # early exit
   # scan input to character vectors
   params <- names(formals(func))
   fbody <- paste0(deparse(body(func)), sep='\n', collapse='')

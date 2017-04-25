@@ -2,20 +2,18 @@
 
 testthat::context('bounds')
 
-testthat::test_that('bind works with closures and primitives', {
-  # bind returns a bound closure
-  testthat::expect_type(bind(sum, 5L, 2L), 
-                        'closure')
-  # works with all
-  testthat::expect_type(bind(function(a, b) a + b, 5L, 2L), 
-                        'closure')
-  # ...
-  catr <- bind(cat, 'hello world')
-  testthat::expect_identical(catr(), 
-                             NULL)
-  # isBound
-  testthat::expect_identical(isBound(catr), 
-                             TRUE)
-  # isBound does not accept primitives
-  testthat::expect_error(isBound(sum))
+testthat::test_that('from bind to bounds', {
+  # works with primitive
+  testthat::expect_type(bind(sum, 5L, 2L), 'closure')
+  # works with anonymous
+  testthat::expect_type(bind(function(a, b) a + b, 5L, 2L), 'closure')
+  # works with R typeof 'closure'
+  printr <- bind(print, 'hello world')
+  testthat::expect_output(printr(), 'hello world')
+  # isBound pt1
+  testthat::expect_identical(isBound(printr), TRUE)
+  # isBound pt2
+  testthat::expect_identical(isBound(print), FALSE)
+  # primitives can not be bounds
+  testthat::expect_identical(isBound(sum), FALSE)
 })
