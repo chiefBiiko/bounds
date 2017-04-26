@@ -4,14 +4,14 @@
 \name{bounds}
 \alias{bounds}
 \alias{bounds-package}
-\title{bounds: Working With Closures}
+\title{bounds: From Bind To Bounds}
 \description{
 Partial application via closures.
 }
 \section{Exports}{
 
-  bind
-  isBound
+  \code{\link{bind}}
+  \code{\link{isBound}}
 }
 
 \section{Repository}{

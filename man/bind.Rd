@@ -2,9 +2,7 @@
 % Please edit documentation in R/bounds.R
 \name{bind}
 \alias{bind}
-\title{Bind parameters to a function.
- 
-\code{bind} returns a closure with given parameters bound to it.}
+\title{Bind parameters to a function}
 \usage{
 bind(func, ...)
 }
@@ -17,8 +15,6 @@ bind(func, ...)
 
 }
 \description{
-Bind parameters to a function.
- 
 \code{bind} returns a closure with given parameters bound to it.
 }
 \examples{

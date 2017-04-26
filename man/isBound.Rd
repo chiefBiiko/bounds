@@ -10,7 +10,7 @@ isBound(func)
 \item{func}{Function to check \strong{required}.}
 }
 \value{
-Logical indicating whether func is bound, a closure.
+Logical indicating whether \code{func} is bound, a closure.
 }
 \description{
 \code{isBound} scans its input function's frame checking if there are any 
@@ -18,7 +18,14 @@ names not bound within its own scope - free variables. It returns a logical valu
 indicating whether the input function is bound, aka a closure.
 }
 \details{
-\code{func} can be any function except primitives. \code{isBound(func)} 
-translates to: Is \code{func} bound to any names in its enclosing environment?
+\code{isBound(func)} translates to: Is \code{func} bound to any 
+names in its enclosing environment? \code{isBound} always returns 
+\code{FALSE} for primitives since these do not have an environment.
+}
+\examples{
+isBound(sum)
+one_plus <- bind(sum, 1L)
+isBound(one_plus)
+
 }
 

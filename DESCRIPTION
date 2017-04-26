@@ -1,8 +1,10 @@
 Package: bounds
-Title: What the Package Does (one line, title case)
+Title: Partial application Via Closures
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R: person("Noah", "Schwarz", email = "first.last@example.com", role = c("aut", "cre"))
+Description: partial application, parameter binding
+Imports:
+    sourcetools
 Depends:
     R (>= 3.3.2)
 License: What license is it under?

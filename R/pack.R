@@ -1,10 +1,10 @@
-#' bounds: Working With Closures
+#' bounds: From Bind To Bounds
 #'
 #' Partial application via closures.
 #' 
 #' @section Exports:
-#'   bind
-#'   isBound
+#'   \code{\link{bind}}
+#'   \code{\link{isBound}}
 #'   
 #' @section Repository:
 #'   \url{https://github.com/chiefBiiko/bounds}

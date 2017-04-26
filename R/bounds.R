@@ -1,7 +1,7 @@
 # bounds
 
-#' Bind parameters to a function.
-#'  
+#' Bind parameters to a function
+#'
 #' \code{bind} returns a closure with given parameters bound to it.
 #' 
 #' @param func Function prototype object \strong{required}.
@@ -30,10 +30,16 @@ bind <- function(func, ...) {  # func proto
 #' indicating whether the input function is bound, aka a closure.
 #' 
 #' @param func Function to check \strong{required}.
-#' @return Logical indicating whether func is bound, a closure.
+#' @return Logical indicating whether \code{func} is bound, a closure.
 #'
-#' @details \code{func} can be any function except primitives. \code{isBound(func)} 
-#' translates to: Is \code{func} bound to any names in its enclosing environment?
+#' @details \code{isBound(func)} translates to: Is \code{func} bound to any 
+#' names in its enclosing environment? \code{isBound} always returns 
+#' \code{FALSE} for primitives since these do not have an environment.
+#'
+#' @examples
+#' isBound(sum)
+#' one_plus <- bind(sum, 1L)
+#' isBound(one_plus)
 #'
 #' @export
 isBound <- function(func) {
@@ -43,7 +49,7 @@ isBound <- function(func) {
   params <- names(formals(func))
   fbody <- paste0(deparse(body(func)), sep='\n', collapse='')
   # tokenize function body
-  token_df <- sourcetools::tokenize_string(fbody)
+  token_df <- sourcetools::tokenize_string(paste0('{', fbody, '}'))
   token <- split(token_df, 1L:nrow(token_df))                 # df to list
   token <- Filter(function(t) t$type != 'whitespace', token)  # toss whitespace
   token <- Filter(function(t) !t$value %in% params, token)    # toss params
@@ -57,7 +63,9 @@ isBound <- function(func) {
         (!grepl('(base::)?assign$', token[[i - 1L]]$value, perl=TRUE) &&
          !grepl('(<)?<-', token[[i + 1L]]$value, perl=TRUE))) {
       TRUE
-    } else { FALSE }
+    } else {
+      FALSE
+    }
   })
   # exit
   return(any(token_TF))
