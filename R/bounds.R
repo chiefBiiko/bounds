@@ -49,12 +49,13 @@ isBound <- function(func) {
   params <- names(formals(func))
   fbody <- paste0(deparse(body(func)), sep='\n', collapse='')
   # tokenize function body
+  stdlib <- builtins()
   token_df <- sourcetools::tokenize_string(paste0('{', fbody, '}'))
   token <- split(token_df, 1L:nrow(token_df))                 # df to list
   token <- Filter(function(t) t$type != 'whitespace', token)  # toss whitespace
   token <- Filter(function(t) !t$value %in% params, token)    # toss params
   token <- lapply(token, function(t) {
-    if (t$type == 'symbol' && t$value %in% builtins()) t$type <- 'builtin'
+    if (t$type == 'symbol' && t$value %in% stdlib) t$type <- 'builtin'
     t
   })
   # peep through
