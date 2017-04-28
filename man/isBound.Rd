@@ -28,4 +28,7 @@ one_plus <- bind(sum, 1L)
 isBound(one_plus)
 
 }
+\seealso{
+\code{\link{bind}}
+}
 

@@ -12,7 +12,7 @@ bind(func, ...)
 \item{...}{Unnamed or named parameters to bind \strong{required}.}
 }
 \value{
-
+Closure with given parameters applied.
 }
 \description{
 \code{bind} returns a closure with given parameters bound to it.
@@ -22,5 +22,8 @@ lie <- bind(cat, 'FRAUD REPORT:')  # bind
 lie('looking for investors')       # have fun
 lie('quick returns guaranteed')
 
+}
+\seealso{
+\code{\link{isBound}}
 }
 

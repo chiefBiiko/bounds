@@ -6,7 +6,9 @@
 #' 
 #' @param func Function prototype object \strong{required}.
 #' @param ... Unnamed or named parameters to bind \strong{required}.
-#' @return 
+#' @return Closure with given parameters applied.
+#' 
+#' @seealso \code{\link{isBound}}
 #' 
 #' @examples
 #' lie <- bind(cat, 'FRAUD REPORT:')  # bind
@@ -36,6 +38,8 @@ bind <- function(func, ...) {  # func proto
 #' names in its enclosing environment? \code{isBound} always returns 
 #' \code{FALSE} for primitives since these do not have an environment.
 #'
+#' @seealso \code{\link{bind}}
+#' 
 #' @examples
 #' isBound(sum)
 #' one_plus <- bind(sum, 1L)
@@ -51,7 +55,7 @@ isBound <- function(func) {
   # tokenize function body
   stdlib <- builtins()
   token_df <- sourcetools::tokenize_string(paste0('{', fbody, '}'))
-  token <- split(token_df, 1L:nrow(token_df))                 # df to list
+  token <- split(token_df, 1L:nrow(token_df))     # df to list
   token <- Filter(function(t) t$type != 'whitespace' || 
                     !t$value %in% params, token)  # toss whitespace & params
   token <- lapply(token, function(t) {            # reduce symbols by builtins
