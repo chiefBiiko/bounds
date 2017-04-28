@@ -1,13 +1,13 @@
 Package: bounds
-Title: Partial application Via Closures
+Title: Partial Application Via Closures
 Version: 0.0.0.9000
-Authors@R: person("Noah", "Schwarz", email = "first.last@example.com", role = c("aut", "cre"))
+Authors@R: person("Noah", "Schwarz", email = "noah.anabiik.schwarz@gmail.com", role = c("aut", "cre"))
 Description: partial application, parameter binding
 Imports:
     sourcetools
 Depends:
     R (>= 3.3.2)
-License: What license is it under?
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests:
