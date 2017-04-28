@@ -55,19 +55,26 @@ isBound <- function(func) {
   # tokenize function body
   stdlib <- builtins()
   token_df <- sourcetools::tokenize_string(paste0('{', fbody, '}'))
-  token <- split(token_df, 1L:nrow(token_df))     # df to list
-  token <- Filter(function(t) t$type != 'whitespace' || 
-                    !t$value %in% params, token)  # toss whitespace & params
-  token <- lapply(token, function(t) {            # reduce symbols by builtins
+  token <- split(token_df, 1L:nrow(token_df))               # df to list
+  token <- Filter(function(t) t$type != 'whitespace', token)       # toss whitespace
+  token <- Filter(function(t) !t$value %in% params, token)  # toss params
+  token <- lapply(token, function(t) {             # reduce symbols by builtins
     if (t$type == 'symbol' && t$value %in% stdlib) t$type <- 'builtin'
     t
   })
   # peep through
+  remember <- vector('character', length(token))
   token_TF <- sapply(1L:length(token), function(i) {
     if (token[[i]]$type == 'symbol' &&  # double & required here!!!
         (!grepl('(base::)?assign$', token[[i - 1L]]$value, perl=TRUE) &&
-         !grepl('(<)?<-', token[[i + 1L]]$value, perl=TRUE))) {
+         !grepl('(<)?<-|=', token[[i + 1L]]$value, perl=TRUE)) && 
+         !token[[i]]$value %in% remember) {
       TRUE
+    } else if (token[[i]]$type == 'symbol' &&  # double & required here!!!
+               (grepl('(base::)?assign$', token[[i - 1L]]$value, perl=TRUE) ||
+                grepl('(<)?<-|=', token[[i + 1L]]$value, perl=TRUE))) {
+      remember[i] <<- token[[i]]$value
+      FALSE
     } else {
       FALSE
     }

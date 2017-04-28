@@ -22,4 +22,7 @@ testthat::test_that('from bind to bounds', {
   testthat::expect_identical(isBound(yo), TRUE)
   # does not fail on nonsense
   testthat::expect_identical(isBound(function() {}), FALSE)
+  # remembers assignments
+  fixd <- function() {y <- 3; y - 1}
+  testthat::expect_identical(isBound(fixd), FALSE)
 })
