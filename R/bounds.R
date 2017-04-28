@@ -52,9 +52,9 @@ isBound <- function(func) {
   stdlib <- builtins()
   token_df <- sourcetools::tokenize_string(paste0('{', fbody, '}'))
   token <- split(token_df, 1L:nrow(token_df))                 # df to list
-  token <- Filter(function(t) t$type != 'whitespace', token)  # toss whitespace
-  token <- Filter(function(t) !t$value %in% params, token)    # toss params
-  token <- lapply(token, function(t) {
+  token <- Filter(function(t) t$type != 'whitespace' || 
+                    !t$value %in% params, token)  # toss whitespace & params
+  token <- lapply(token, function(t) {            # reduce symbols by builtins
     if (t$type == 'symbol' && t$value %in% stdlib) t$type <- 'builtin'
     t
   })
