@@ -67,7 +67,8 @@ isBound <- function(func) {
   token_TF <- sapply(1L:length(token), function(i) {
     if (token[[i]]$type == 'symbol' &&  # double & required here!!!
         (!grepl('(base::)?assign$', token[[i - 1L]]$value, perl=TRUE) &&
-         !grepl('(<)?<-|=', token[[i + 1L]]$value, perl=TRUE)) && 
+         # TODO: do not match super assignments <<- 
+         !grepl('<-|=', token[[i + 1L]]$value, perl=TRUE)) && 
          !token[[i]]$value %in% remember) {
       TRUE
     } else if (token[[i]]$type == 'symbol' &&  # double & required here!!!
