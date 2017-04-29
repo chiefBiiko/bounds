@@ -73,7 +73,7 @@ isBound <- function(func) {
       TRUE
     } else if (token[[i]]$type == 'symbol' &&  # double & required here!!!
                (grepl('(base::)?assign$', token[[i - 1L]]$value, perl=TRUE) ||
-                grepl('(<)?<-|=', token[[i + 1L]]$value, perl=TRUE))) {
+                grepl('^<-|^=(?!=)', token[[i + 1L]]$value, perl=TRUE))) {
       remember[i] <<- token[[i]]$value
       FALSE
     } else {

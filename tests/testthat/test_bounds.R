@@ -25,4 +25,13 @@ testthat::test_that('from bind to bounds', {
   # remembers assignments
   fixd <- function() {y <- 3; y - 1}
   testthat::expect_identical(isBound(fixd), FALSE)
+  # detects super assignments
+  boo <- function() {a<<-2L; a}
+  testthat::expect_identical(isBound(boo), TRUE)
+  # handles equal assignments
+  voo <- function() {a=2L; a}
+  testthat::expect_identical(isBound(voo), FALSE)
+  # handles comparisons
+  coo <- function() {a==2L; a}
+  testthat::expect_identical(isBound(coo), TRUE)
 })
